@@ -29,7 +29,7 @@ const mockRooms = [
     furnishing: 'SEMI_FURNISHED',
     maxOccupancy: 1,
     status: 'AVAILABLE',
-    images: ['https://example.com/room2-img1.jpg'],
+    images: ['https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg'],
     features: ['Study Table', 'Single Bed', 'Storage'],
     createdAt: '2023-10-01T10:00:00.000Z',
     updatedAt: '2023-10-01T10:00:00.000Z'
@@ -63,7 +63,7 @@ export const mockProperties = [
     amenities: ['Air Conditioning', 'Parking', '24/7 Security', 'Power Backup', 'Lift'],
     images: [
       'https://images.pexels.com/photos/1648771/pexels-photo-1648771.jpeg',
-      'https://example.com/property1-img2.jpg'
+      'https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg'
     ],
     owner: {
       _id: 'owner-123',

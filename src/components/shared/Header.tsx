@@ -3,7 +3,10 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
-import { FiHome, FiFileText, FiDollarSign, FiUser, FiMenu, FiMoon, FiSun, FiLogOut } from 'react-icons/fi';
+import { FiHome, FiFileText, FiDollarSign, FiUser, FiMenu, FiMoon, FiSun, FiLogOut  } from 'react-icons/fi';
+import { MdOutlineBedroomParent } from "react-icons/md";
+import { BiSolidBuildingHouse } from "react-icons/bi";
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { Variants } from 'framer-motion';
 
@@ -57,7 +60,7 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-4">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            {/* <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link 
                 href="/"
                 className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
@@ -76,9 +79,35 @@ export default function Header() {
                   Home
                 </motion.span>
               </Link>
-            </motion.div>
+            </motion.div> */}
 
             <div className="flex items-center bg-gray-100/80 dark:bg-dark-700/80 rounded-lg p-1">
+              
+
+
+              <Link 
+                href="/"
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                  router.pathname === '/'
+                    ? 'bg-white dark:bg-dark-600 text-primary-600 shadow-sm'
+                    : 'text-gray-700 hover:text-primary-600 dark:text-gray-200'
+                }`}
+              >
+                <motion.span 
+                  className="flex items-center gap-2 whitespace-nowrap"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <FiHome />
+                  Home
+                </motion.span>
+              </Link>
+              
+              
+              
+              
+              
               <Link 
                 href="/properties"
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
@@ -93,7 +122,7 @@ export default function Header() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <FiHome />
+                  <BiSolidBuildingHouse />
                   Properties
                 </motion.span>
               </Link>
@@ -112,7 +141,7 @@ export default function Header() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <FiDollarSign />
+                  <MdOutlineBedroomParent  />
                   Rooms
                 </motion.span>
               </Link>
