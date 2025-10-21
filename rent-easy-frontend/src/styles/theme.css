@@ -1,0 +1,186 @@
+/* Theme variables */
+:root {
+  /* Primary Colors */
+  --color-primary: 59 130 246;
+  --color-primary-light: 96 165 250;
+  --color-primary-dark: 37 99 235;
+  
+  /* Secondary Colors */
+  --color-secondary: 99 102 241;
+  --color-secondary-light: 129 140 248;
+  --color-secondary-dark: 79 70 229;
+  
+  /* Accent Colors */
+  --color-accent: 236 72 153;
+  --color-accent-light: 244 114 182;
+  --color-accent-dark: 219 39 119;
+  
+  /* Background Colors */
+  --color-background: 255 255 255;
+  --color-surface: 249 250 251;
+  --color-surface-2: 243 244 246;
+  
+  /* Text Colors */
+  --color-text: 17 24 39;
+  --color-text-light: 107 114 128;
+  --color-text-lighter: 156 163 175;
+  
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+/* Dark mode overrides */
+.dark {
+  --color-background: 17 24 39; /* gray-900 */
+  --color-surface: 31 41 55; /* gray-800 */
+  --color-surface-2: 55 65 81; /* gray-700 */
+  
+  --color-text: 249 250 251; /* gray-50 */
+  --color-text-light: 209 213 219; /* gray-300 */
+  --color-text-lighter: 156 163 175; /* gray-400 */
+}
+
+/* Light mode overrides for specific components */
+.select-options {
+  @apply text-gray-900 bg-white border border-gray-200;
+}
+
+.dark .select-options {
+  @apply text-white bg-gray-800 border-gray-700;
+}
+
+.outer-border {
+  @apply border border-gray-200 dark:border-gray-700;
+}
+
+.why-choose-section {
+  @apply bg-gray-50 dark:bg-gray-800;
+}
+
+.why-choose-section * {
+  @apply text-gray-900 dark:text-gray-100;
+}
+
+/* Currency symbol */
+.currency-symbol::before {
+  content: '₹';
+}
+
+/* Active tab styling */
+.tab-item.active {
+  @apply bg-primary-100 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400;
+}
+
+/* Glass morphism effects */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(17, 24, 39, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient animations */
+.gradient-bg {
+  background: linear-gradient(-45deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Custom animations */
+.hover-lift {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+/* Smooth transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.7);
+}
+
+/* Loading animations */
+.loading-dots:after {
+  content: '.';
+  animation: dots 1.5s steps(5, end) infinite;
+}
+
+@keyframes dots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60% { content: '...'; }
+  80%, 100% { content: ''; }
+}
+
+/* Input focus effects */
+.input-focus-effect {
+  position: relative;
+}
+
+.input-focus-effect::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: rgb(var(--color-primary));
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.input-focus-effect:focus-within::after {
+  width: 100%;
+  left: 0;
+}

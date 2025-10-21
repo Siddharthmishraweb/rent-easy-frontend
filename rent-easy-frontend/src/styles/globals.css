@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import animations */
+@import './animations.css';
+
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+  }
+  body {
+    @apply min-h-screen bg-white dark:bg-dark-900 text-gray-900 dark:text-gray-100;
+  }
+}
+
+/* Import other styles after base styles */
+@import './dashboard.css';
+@import './theme.css';
+
+@layer base {
+  :root {
+    --toaster-bg: theme('colors.white');
+    --toaster-color: theme('colors.gray.900');
+  }
+
+  .dark {
+    --toaster-bg: theme('colors.dark.800');
+    --toaster-color: theme('colors.white');
+  }
+}
+
+/* Custom scrollbar for dark mode */
+.dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: theme('colors.dark.800');
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: theme('colors.dark.600');
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: theme('colors.dark.500');
+}
+
+/* Custom styles for form elements in dark mode */
+.dark input,
+.dark select,
+.dark textarea {
+  background-color: theme('colors.dark.800') !important;
+  border-color: theme('colors.dark.700') !important;
+  color: theme('colors.white') !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: theme('colors.dark.400') !important;
+}
+
+/* Smooth transitions for theme switching */
+.transition-colors {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
