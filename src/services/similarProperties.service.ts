@@ -1,5 +1,5 @@
 import { API_CONFIG } from '@/config/api.config';
-import { api } from './api';
+import api from './api';
 import { mockSimilarPropertiesResponse } from '@/mocks/similarProperties';
 
 export const similarPropertiesService = {

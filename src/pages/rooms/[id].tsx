@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useRoom } from '@/hooks/useRoom';
 import Button from '@/components/shared/Button';
 import { Card, CardBody } from '@/components/shared/Card';
-import Badge from '@/components/shared/Badge';
+import { Badge } from '@/components/shared/Badge';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { ImageCarousel } from '@/components/shared/ImageCarousel';
@@ -13,7 +13,7 @@ import { BookingForm } from '@/components/room/BookingForm';
 const RoomDetailPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { data: room, isLoading, error } = useRoom(id as string);
+  const { room, loading: isLoading, error } = useRoom(id as string);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -53,7 +53,7 @@ const RoomDetailPage = () => {
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
                     <div>
                       <div className="text-sm text-gray-600 dark:text-gray-400">Room Type</div>
-                      <div className="font-semibold">{room.type}</div>
+                      <div className="font-semibold">{room.roomType}</div>
                     </div>
                     <div>
                       <div className="text-sm text-gray-600 dark:text-gray-400">Floor Area</div>
@@ -96,7 +96,7 @@ const RoomDetailPage = () => {
                 <CardBody>
                   <h2 className="text-2xl font-semibold mb-4">Rules & Policies</h2>
                   <ul className="space-y-2">
-                    {room.rules?.map((rule, index) => (
+                    {room.amenities?.map((amenity: string, index: number) => (
                       <li key={index} className="flex items-start gap-2">
                         <svg
                           className="w-5 h-5 text-gray-600 dark:text-gray-400 mt-0.5"
@@ -111,7 +111,7 @@ const RoomDetailPage = () => {
                             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                           />
                         </svg>
-                        <span>{rule}</span>
+                        <span>{amenity}</span>
                       </li>
                     ))}
                   </ul>

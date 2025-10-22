@@ -2,7 +2,7 @@ import { Room } from '@/types/property';
 import Image from 'next/image';
 import { useState } from 'react';
 import AssignTenantModal from './AssignTenantModal';
-import { Button } from '@/components/shared/Button';
+import Button from '@/components/shared/Button';
 
 interface RoomCardProps {
   room: Room;

@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'ref'> {
   label?: string;
   error?: string;
   helperText?: string;
@@ -11,9 +11,9 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   variant?: 'outlined' | 'filled';
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  (props, ref) => {
+    const {
       label,
       error,
       helperText,
@@ -22,10 +22,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       fullWidth = false,
       variant = 'outlined',
       className = '',
-      ...props
-    },
-    ref
-  ) => {
+      ...inputProps
+    } = props;
     const isError = !!error;
 
     return (
@@ -62,9 +60,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               'py-2',
               fullWidth && 'w-full',
               'disabled:opacity-50 disabled:cursor-not-allowed',
-              props.className
+              className
             )}
-            {...props}
+            {...inputProps}
           />
           {endIcon && (
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
@@ -86,3 +84,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     );
   }
 );
+
+Input.displayName = 'Input';
+
+export default Input;

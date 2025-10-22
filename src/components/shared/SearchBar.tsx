@@ -109,12 +109,12 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
           <motion.div
             whileTap={{ scale: 0.98 }}
             className={`relative transition-all duration-300 ${
-              isFocused.type ? 'shadow-lg shadow-blue-500/20' : ''
+              isFocused.propertyType ? 'shadow-lg shadow-blue-500/20' : ''
             }`}
           >
             <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
               <FiHome className={`h-5 w-5 transition-colors duration-300 ${
-                isFocused.type ? 'text-blue-500' : 'text-gray-400'
+                isFocused.propertyType ? 'text-blue-500' : 'text-gray-400'
               }`} />
             </div>
             <select

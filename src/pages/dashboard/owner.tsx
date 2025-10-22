@@ -10,7 +10,7 @@ export default function OwnerDashboard() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('properties');
 
-  if (!user?._id) {
+  if (!user?.id) {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-full">
@@ -56,10 +56,10 @@ export default function OwnerDashboard() {
         </div>
 
         <div className="bg-white dark:bg-dark-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-dark-700 transition-colors duration-200">
-          {activeTab === 'properties' && <PropertyList ownerId={user._id} />}
-          {activeTab === 'tenants' && <TenantList ownerId={user._id} />}
-          {activeTab === 'payments' && <PaymentOverview ownerId={user._id} />}
-          {activeTab === 'complaints' && <ComplaintsList ownerId={user._id} userType="owner" />}
+          {activeTab === 'properties' && <PropertyList ownerId={user.id} />}
+          {activeTab === 'tenants' && <TenantList ownerId={user.id} />}
+          {activeTab === 'payments' && <PaymentOverview ownerId={user.id} />}
+          {activeTab === 'complaints' && <ComplaintsList ownerId={user.id} userType="owner" />}
         </div>
       </div>
     </DashboardLayout>

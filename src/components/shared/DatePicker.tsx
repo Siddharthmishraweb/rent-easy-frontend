@@ -5,8 +5,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 interface DatePickerProps {
   label?: string;
   error?: string;
-  value?: Date;
-  onChange?: (date: Date) => void;
+  value?: Date | null;
+  onChange?: (date: Date | null) => void;
   minDate?: Date;
   maxDate?: Date;
   placeholder?: string;

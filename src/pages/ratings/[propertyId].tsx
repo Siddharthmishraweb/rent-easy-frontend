@@ -1,23 +1,24 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useRatings } from '@/hooks/useRatings';
-import { Button } from '@/components/shared/button';
-import { Card, CardBody } from '@/components/shared/card';
-import { Avatar } from '@/components/shared/avatar';
-import { Badge } from '@/components/shared/badge';
-import { Spinner } from '@/components/shared/spinner';
+import { ratingService, Rating } from '@/services/rating.service';
+import Button from '@/components/shared/Button';
+import { Card, CardBody } from '@/components/shared/Card';
+import { Avatar } from '@/components/shared/Avatar';
+import { Badge } from '@/components/shared/Badge';
+import { Spinner } from '@/components/shared/Spinner';
 import { useRouter } from 'next/router';
 import { CreateReviewModal } from '@/components/reviews/CreateReviewModal';
 
 const RatingsPage = () => {
   const router = useRouter();
   const { propertyId } = router.query;
-  const { data: ratings, isLoading, error } = useRatings(propertyId as string);
+  const { ratings, loading: isLoading, error } = useRatings(propertyId as string);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   const getRatingDistribution = () => {
     const distribution = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
-    ratings?.forEach((rating) => {
+    ratings?.forEach((rating: { rating: number }) => {
       distribution[rating.rating as keyof typeof distribution]++;
     });
     return distribution;
@@ -25,7 +26,7 @@ const RatingsPage = () => {
 
   const averageRating = React.useMemo(() => {
     if (!ratings?.length) return 0;
-    const total = ratings.reduce((acc, curr) => acc + curr.rating, 0);
+    const total = ratings.reduce((acc: number, curr: { rating: number }) => acc + curr.rating, 0);
     return (total / ratings.length).toFixed(1);
   }, [ratings]);
 
@@ -103,7 +104,7 @@ const RatingsPage = () => {
 
           {/* Reviews List */}
           <div className="space-y-4">
-            {ratings?.map((review) => (
+            {ratings?.map((review: Rating) => (
               <motion.div
                 key={review.id}
                 initial={{ opacity: 0 }}
@@ -113,7 +114,7 @@ const RatingsPage = () => {
                   <CardBody>
                     <div className="flex items-start gap-4">
                       <Avatar
-                        src={review.user.profileImage}
+                        src={review.user.profilePicture}
                         alt={review.user.name}
                         size="md"
                       />
@@ -130,18 +131,9 @@ const RatingsPage = () => {
                           </Badge>
                         </div>
                         <p className="mt-2 text-gray-700 dark:text-gray-300">
-                          {review.comment}
+                          {review.review}
                         </p>
-                        {review.response && (
-                          <div className="mt-4 ml-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                            <div className="font-semibold mb-1">
-                              Owner Response
-                            </div>
-                            <p className="text-gray-600 dark:text-gray-400">
-                              {review.response}
-                            </p>
-                          </div>
-                        )}
+
                       </div>
                     </div>
                   </CardBody>
@@ -183,7 +175,17 @@ const RatingsPage = () => {
       <CreateReviewModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        propertyId={propertyId as string}
+        onSubmit={async (rating: number, review: string) => {
+          try {
+            // Call the rating service to add the new review
+            await ratingService.addRating(propertyId as string, { rating, review });
+            setIsModalOpen(false);
+            // Refresh the ratings
+            router.reload();
+          } catch (error) {
+            console.error('Failed to submit review:', error);
+          }
+        }}
       />
     </div>
   );

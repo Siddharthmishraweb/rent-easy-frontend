@@ -99,8 +99,8 @@ export default function ComplaintForm({ tenantId }: ComplaintFormProps) {
           >
             <option value="">Choose a property</option>
             {agreements?.map((agreement: RentalAgreement) => (
-              <option key={agreement._id} value={agreement._id}>
-                {agreement.property.title}
+              <option key={agreement.id} value={agreement.id}>
+                {agreement.property.propertyName}
               </option>
             ))}
           </select>

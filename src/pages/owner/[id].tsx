@@ -1,12 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useOwner } from '@/hooks/useOwner';
-import { Button } from '@/components/shared/button';
-import { Card, CardBody } from '@/components/shared/card';
-import { Avatar } from '@/components/shared/avatar';
-import { Badge } from '@/components/shared/badge';
-import { Spinner } from '@/components/shared/spinner';
+import useOwner from '@/hooks/useOwner';
+import Button from '@/components/shared/Button';
+import { Card, CardBody } from '@/components/shared/Card';
+import { Avatar } from '@/components/shared/Avatar';
+import { Badge } from '@/components/shared/Badge';
+import { Spinner } from '@/components/shared/Spinner';
 import { useRouter } from 'next/router';
+import type { Property } from '@/types/property';
+import type { Review } from '@/types/owner';
 
 const OwnerPage = () => {
   const router = useRouter();
@@ -34,10 +36,10 @@ const OwnerPage = () => {
               <CardBody>
                 <div className="flex items-start md:items-center flex-col md:flex-row gap-6">
                   <Avatar
-                    src={owner.profileImage}
+                    src={owner.profilePicture}
                     alt={owner.name}
                     size="xl"
-                    className="w-24 h-24"
+
                   />
                   <div className="flex-1">
                     <h1 className="text-3xl font-semibold mb-2">{owner.name}</h1>
@@ -66,7 +68,7 @@ const OwnerPage = () => {
             {/* Properties Section */}
             <h2 className="text-2xl font-semibold mb-6">Properties</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              {owner.properties?.map((property) => (
+              {owner.properties?.map((property: Property) => (
                 <motion.div
                   key={property.id}
                   initial={{ opacity: 0 }}
@@ -80,22 +82,22 @@ const OwnerPage = () => {
                       <div className="flex gap-4">
                         <img
                           src={property.images[0]}
-                          alt={property.name}
+                          alt={property.propertyName}
                           className="w-24 h-24 object-cover rounded-lg"
                         />
                         <div>
                           <h3 className="text-lg font-semibold mb-2">
-                            {property.name}
+                            {property.propertyName}
                           </h3>
                           <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
-                            {property.address}
+                            {property.location.address}
                           </p>
                           <div className="flex gap-2">
                             <Badge color="green">
-                              ₹{property.rent.toLocaleString()}/month
+                              ₹{property.minAmount?.toLocaleString() ?? 'N/A'}/month
                             </Badge>
                             <Badge color="blue">
-                              {property.type}
+                              {property.propertyType}
                             </Badge>
                           </div>
                         </div>
@@ -109,7 +111,7 @@ const OwnerPage = () => {
             {/* Reviews Section */}
             <h2 className="text-2xl font-semibold mb-6">Reviews</h2>
             <div className="space-y-4">
-              {owner.reviews?.map((review) => (
+              {owner.reviews?.map((review: Review) => (
                 <motion.div
                   key={review.id}
                   initial={{ opacity: 0 }}
@@ -119,7 +121,7 @@ const OwnerPage = () => {
                     <CardBody>
                       <div className="flex items-start gap-4">
                         <Avatar
-                          src={review.user.profileImage}
+                          src={review.user.profilePicture}
                           alt={review.user.name}
                           size="md"
                         />

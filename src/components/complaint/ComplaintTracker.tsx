@@ -38,8 +38,8 @@ export default function ComplaintTracker({ complaintId }: ComplaintTrackerProps)
     }
   );
 
-  const getStatusColor = (status: Complaint['status']) => {
-    const colors: Record<Complaint['status'], string> = {
+  const getStatusColor = (status: Complaint['status']): 'yellow' | 'blue' | 'green' | 'red' | 'gray' => {
+    const colors: Record<Complaint['status'], 'yellow' | 'blue' | 'green' | 'red'> = {
       'pending': 'yellow',
       'in-progress': 'blue',
       'resolved': 'green',
@@ -55,10 +55,11 @@ export default function ComplaintTracker({ complaintId }: ComplaintTrackerProps)
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <span>Status:</span>
-            <Badge 
-              color={getStatusColor(complaint?.data.status || 'pending')}
-              text={complaint?.data.status || 'pending'}
-            />
+            <Badge color={getStatusColor(complaint?.data.status || 'pending')}>
+              {complaint?.data.status || 'pending'}
+            </Badge>
+
+
           </div>
           <div className="space-y-2">
             <p className="font-medium">Timeline:</p>

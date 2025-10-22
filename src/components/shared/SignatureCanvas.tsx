@@ -20,9 +20,11 @@ export default function SignatureCanvas({ onSave }: SignatureCanvasProps) {
   };
 
   const handleSave = () => {
-    if (signaturePadRef.current?.isEmpty()) return;
-    const dataUrl = signaturePadRef.current?.toDataURL();
-    onSave(dataUrl);
+    if (!signaturePadRef.current || signaturePadRef.current.isEmpty()) return;
+    const dataUrl = signaturePadRef.current.toDataURL();
+    if (dataUrl) {
+      onSave(dataUrl);
+    }
   };
 
   return (

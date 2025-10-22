@@ -1,5 +1,5 @@
-import api from '../utils/axios';
-import { RentalAgreement } from '../types/api';
+import api from './api';
+import { RentalAgreement } from '@/types/api';
 
 export const agreementService = {
   async createAgreement(data: {

@@ -208,7 +208,7 @@ export default function RoomListingPage() {
                   <div className="grid grid-cols-2 gap-2 text-sm mb-4">
                     <div className="flex items-center text-gray-600 dark:text-gray-400">
                       <FiHome className="mr-1" />
-                      {room.type}
+                      { "room?.type"}
                     </div>
                     <div className="flex items-center text-gray-600 dark:text-gray-400">
                       <FiMaximize className="mr-1" />

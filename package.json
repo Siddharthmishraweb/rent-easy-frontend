@@ -2,11 +2,15 @@
   "name": "rent-easy-frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://Siddharthmishraweb.github.io/rent-easy-frontend",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export",
+    "predeploy": "npm run build && npm run export",
+    "deploy": "gh-pages -d out"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -41,6 +45,7 @@
     "@types/react": "^18.3.26",
     "@types/react-dom": "^18.2.7",
     "autoprefixer": "^10.4.15",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.4.29",
     "typescript": "^5.9.3"
   }

@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { usePaymentHistory } from '@/hooks/usePaymentHistory';
 import Button from '@/components/shared/Button';
 import { Card, CardBody } from '@/components/shared/Card';
-import Badge from '@/components/shared/Badge';
-import { Spinner } from '@/components/shared/spinner';
+import { Badge } from '@/components/shared/Badge';
+import { Spinner } from '@/components/shared/Spinner';
 import { useRouter } from 'next/router';
 import { PaymentDetails } from '@/components/payment/PaymentDetails';
 
@@ -59,8 +59,8 @@ const PaymentDetailsPage = () => {
             >
               Back to Payments
             </Button>
-            {payment.invoice && (
-              <Button onClick={() => window.open(payment.invoice, '_blank')}>
+            {payment.status === 'PAID' && payment.transactionId && (
+              <Button onClick={() => console.log(`Download invoice for ${payment.transactionId}`)}>
                 Download Invoice
               </Button>
             )}

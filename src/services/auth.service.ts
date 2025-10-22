@@ -1,7 +1,37 @@
 import { LoginResponse, User } from '../types/api';
 import { FLAG_USE_BACKEND } from '../data/properties';
-import { mockLogin, mockRegister } from '../data/auth';
 import api from './api';
+
+type Role = 'OWNER' | 'TENANT' | 'ADMIN';
+
+interface MockUser {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  role: Role;
+  phone?: string;
+  profilePicture?: string;
+}
+
+const mockUsers: Record<string, MockUser> = {
+  owner: {
+    id: 'owner1',
+    name: 'John Owner',
+    email: 'owner@example.com',
+    password: 'password123',
+    role: 'OWNER',
+    phone: '+1234567890'
+  },
+  tenant: {
+    id: 'tenant1',
+    name: 'Jane Tenant',
+    email: 'tenant@example.com',
+    password: 'password123',
+    role: 'TENANT',
+    phone: '+0987654321'
+  }
+};
 
 export const authService = {
   async login(email: string, password: string): Promise<LoginResponse> {
@@ -18,16 +48,17 @@ export const authService = {
     }
 
     // Create mock token
-    const token = btoa(JSON.stringify({ userId: user._id, role: user.role }));
+    const token = btoa(JSON.stringify({ userId: user.id, role: user.role }));
 
     return {
       token,
       user: {
-        _id: user._id,
+        id: user.id,
         name: user.name,
         email: user.email,
         role: user.role,
-        phone: user.phone
+        phone: user.phone,
+        profilePicture: user.profilePicture
       }
     };
   },
@@ -49,17 +80,17 @@ export const authService = {
 
     // Create new user
     const newUser = {
-      _id: Math.random().toString(36).substr(2, 9),
+      id: Math.random().toString(36).substr(2, 9),
       ...userData
     };
 
     // Create mock token
-    const token = btoa(JSON.stringify({ userId: newUser._id, role: newUser.role }));
+    const token = btoa(JSON.stringify({ userId: newUser.id, role: newUser.role }));
 
     return {
       token,
       user: {
-        _id: newUser._id,
+        id: newUser.id,
         name: newUser.name,
         email: newUser.email,
         role: newUser.role,
@@ -74,13 +105,14 @@ export const authService = {
     
     const user = mockUsers.tenant;
     return {
-      token: btoa(JSON.stringify({ userId: user._id, role: user.role })),
+      token: btoa(JSON.stringify({ userId: user.id, role: user.role })),
       user: {
-        _id: user._id,
+        id: user.id,
         name: user.name,
         email: user.email,
         role: user.role,
-        phone: user.phone
+        phone: user.phone,
+        profilePicture: user.profilePicture
       }
     };
   },
@@ -91,16 +123,17 @@ export const authService = {
 
     try {
       const { userId } = JSON.parse(atob(token));
-      const user = Object.values(mockUsers).find(u => u._id === userId);
+      const user = Object.values(mockUsers).find(u => u.id === userId);
       
       if (!user) return null;
 
       return {
-        _id: user._id,
+        id: user.id,
         name: user.name,
         email: user.email,
         role: user.role,
-        phone: user.phone
+        phone: user.phone,
+        profilePicture: user.profilePicture
       };
     } catch {
       return null;
@@ -136,6 +169,22 @@ export const authService = {
     }
     // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 1000));
+  },
+
+  async updateProfile(userId: string, userData: Partial<User>): Promise<User> {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // Mock profile update
+    // In real app, this would be an API call
+    return {
+      id: userId,
+      name: userData.name || '',
+      email: userData.email || '',
+      role: userData.role || 'TENANT',
+      phone: userData.phone,
+      profilePicture: userData.profilePicture
+    };
   },
 
   logout() {

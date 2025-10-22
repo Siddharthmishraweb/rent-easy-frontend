@@ -23,7 +23,13 @@ const itemVariants = {
 };
 
 const Properties = () => {
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<{
+    city: string;
+    propertyType: string;
+    minAmount: string;
+    maxAmount: string;
+    bhkType: string;
+  }>({
     city: '',
     propertyType: '',
     minAmount: '',
@@ -32,7 +38,11 @@ const Properties = () => {
   });
 
   const { data: response, isLoading, error } = useQuery(['properties', filters], 
-    () => propertyService.searchProperties(filters)
+    () => propertyService.searchProperties({
+      ...filters,
+      minAmount: filters.minAmount ? Number(filters.minAmount) : undefined,
+      maxAmount: filters.maxAmount ? Number(filters.maxAmount) : undefined
+    })
   );
 
   const properties = response?.data || [];

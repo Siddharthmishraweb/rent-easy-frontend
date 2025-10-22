@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User } from '../types/api';
+import { Role, User } from '@/types/auth';
 import { authService } from '../services/auth.service';
 import { useRouter } from 'next/router';
 
@@ -12,6 +12,7 @@ interface AuthContextType {
   logout: () => void;
   forgotPassword: (email: string) => Promise<void>;
   resetPassword: (token: string, password: string) => Promise<void>;
+  updateUser: (data: Partial<User>) => Promise<void>;
   isAuthenticated: boolean;
 }
 
@@ -54,7 +55,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const register = async (data: RegisterData) => {
     try {
-      await authService.register(data);
+      await authService.register({
+        ...data,
+        role: data.role as Role
+      });
       await login(data.email, data.password);
     } catch (error: any) {
       throw new Error(error.response?.data?.message || 'Registration failed');
@@ -102,6 +106,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const updateUser = async (data: Partial<User>) => {
+    if (!user) throw new Error('No user logged in');
+    try {
+      const updatedUser = await authService.updateProfile(user.id, data);
+      setUser(updatedUser);
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Profile update failed');
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -113,6 +127,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         logout,
         forgotPassword,
         resetPassword,
+        updateUser,
         isAuthenticated: !!user,
       }}
     >

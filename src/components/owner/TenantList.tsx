@@ -9,7 +9,13 @@ interface TenantListProps {
 }
 
 interface TenantCardProps {
-  tenant: User;
+  tenant: {
+    id: string;
+    name: string;
+    email: string;
+    phone?: string;
+    profilePicture?: string;
+  };
   agreement: RentalAgreement;
 }
 
@@ -32,7 +38,7 @@ const TenantCard: React.FC<TenantCardProps> = ({ tenant, agreement }) => {
         </div>
         <div>
           <h3 className="text-lg font-semibold">{tenant.name}</h3>
-          <p className="text-gray-600 text-sm">{agreement.property.title}</p>
+           <p className="text-gray-600 text-sm">{agreement.property.propertyName}</p>
         </div>
       </div>
 
@@ -101,7 +107,7 @@ export default function TenantList({ ownerId }: TenantListProps) {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {agreements.map((agreement: RentalAgreement) => (
         <TenantCard
-          key={agreement._id}
+          key={agreement.id}
           tenant={agreement.tenant}
           agreement={agreement}
         />

@@ -41,7 +41,7 @@ export default function RentedProperties({ tenantId }: RentedPropertiesProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {agreements.map((agreement: RentalAgreement) => (
-        <div key={agreement._id} className="space-y-4">
+        <div key={agreement.id} className="space-y-4">
           <PropertyCard property={agreement.property} />
           <div className="bg-white p-4 rounded-lg shadow">
             <div className="grid grid-cols-2 gap-4">

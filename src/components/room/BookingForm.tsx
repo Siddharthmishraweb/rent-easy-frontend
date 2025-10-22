@@ -37,10 +37,10 @@ export const BookingForm: React.FC<BookingFormProps> = ({ room, className = '' }
     }
   };
 
-  const handleDateChange = (date: string) => {
+  const handleDateChange = (date: Date | null) => {
     setFormData(prev => ({
       ...prev,
-      startDate: date
+      startDate: date ? date.toISOString() : ''
     }));
     if (errors.startDate) {
       setErrors(prev => ({
@@ -135,10 +135,9 @@ export const BookingForm: React.FC<BookingFormProps> = ({ room, className = '' }
         <div>
           <DatePicker
             label="Move-in Date"
-            selected={formData.startDate}
+            value={formData.startDate ? new Date(formData.startDate) : undefined}
             onChange={handleDateChange}
             minDate={new Date()}
-            required
             error={errors.startDate}
           />
         </div>
@@ -212,7 +211,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({ room, className = '' }
           type="submit"
           className="w-full mt-4"
           disabled={loading}
-          loading={loading}
+          isLoading={loading}
         >
           {loading ? 'Processing...' : 'Book Now'}
         </Button>

@@ -147,23 +147,23 @@ export default function PaymentOverview({ ownerId }: PaymentOverviewProps) {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {payments?.slice(0, 10).map((payment: RentPayment) => (
-                <tr key={payment._id}>
+                <tr key={payment.id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
-                      {payment.agreement.property.title}
+                      {payment.propertyName || 'Property'}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">
-                      {payment.agreement.tenant.name}
+                      {payment.tenantName || 'Tenant'}
                     </div>
                     <div className="text-sm text-gray-500">
-                      {payment.agreement.tenant.email}
+                      {payment.tenantEmail}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
-                      ₹{payment.amount}
+                      ₹{payment.amount.toLocaleString()}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">

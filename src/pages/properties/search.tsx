@@ -20,7 +20,7 @@ const SearchProperties = () => {
       try {
         setLoading(true);
         const response = await propertyService.searchProperties(searchParams);
-        setProperties(response.data.data);
+        setProperties(response.data);
       } catch (error) {
         console.error('Error fetching properties:', error);
       } finally {
@@ -31,10 +31,16 @@ const SearchProperties = () => {
     fetchProperties();
   }, [searchParams]);
 
-  const handleSearch = (query: string) => {
+  const handleSearch = (params: {
+    location: string;
+    priceRange: string;
+    propertyType: string;
+  }) => {
     setSearchParams(prev => ({
       ...prev,
-      search: query,
+      location: params.location,
+      propertyType: params.propertyType,
+      priceRange: params.priceRange,
       page: 1
     }));
   };
@@ -58,9 +64,8 @@ const SearchProperties = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {properties.map((property) => (
             <PropertyCard
-              key={property._id}
+              key={property.id}
               property={property}
-              onClick={() => handlePropertyClick(property._id)}
             />
           ))}
           {properties.length === 0 && (

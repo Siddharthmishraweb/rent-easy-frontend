@@ -165,7 +165,7 @@ export const propertyService = {
       }
       
       // Map to correct type
-      const mappedProperties: Property[] = filteredProperties.map(p => ({
+      const mappedProperties: any[] = filteredProperties.map(p => ({
         id: p._id,
         uniquePropertyCode: p._id,
         propertyName: p.name,
@@ -195,18 +195,24 @@ export const propertyService = {
           phone: p.owner.phone
         },
         rooms: p.rooms?.map(room => ({
+          _id: room._id,
           id: room._id,
+          roomNumber: '1',
+          roomType: room.type,
           name: room.name,
           description: room.description,
           images: room.images,
           rent: room.rent,
           securityDeposit: room.securityDeposit,
-          type: room.type,
+          roomSize: `${room.area}sqft`,
+          floorNumber: 1,
           area: room.area,
           furnishing: room.furnishing as 'FURNISHED' | 'SEMI_FURNISHED' | 'UNFURNISHED',
           maxOccupancy: room.maxOccupancy,
           status: room.status as 'AVAILABLE' | 'OCCUPIED' | 'MAINTENANCE',
+          isAvailable: room.status === 'AVAILABLE',
           features: room.features,
+          amenities: room.features,
           propertyCode: p._id,
           createdAt: room.createdAt,
           updatedAt: room.updatedAt

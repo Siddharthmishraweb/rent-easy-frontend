@@ -4,12 +4,14 @@ import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { useToast } from '@/contexts/ToastContext';
 import { Card, CardHeader, CardBody } from '@/components/shared/Card';
-import { Input } from '@/components/shared/Input';
+import Input from '@/components/shared/Input';
 import Button from '@/components/shared/Button';
 import { Alert } from '@/components/shared/Alert';
 import { uploadImage } from '@/utils/helpers';
 import { config } from '@/config';
 import { useUser } from '@/contexts/AuthContext';
+import { RentHistory } from '@/components/tenant/RentHistory';
+import { PropertyRentalHistory } from '@/components/owner/PropertyRentalHistory';
 
 interface ProfileFormData {
   name: string;
@@ -23,7 +25,7 @@ const ProfilePage = () => {
   const toast = useToast();
   const { user, updateUser } = useUser();
   const [isUploading, setIsUploading] = useState(false);
-  const [imagePreview, setImagePreview] = useState(user?.profileImage || '');
+  const [imagePreview, setImagePreview] = useState(user?.profilePicture || '');
 
   const {
     register,
@@ -63,7 +65,7 @@ const ProfilePage = () => {
   const onSubmit = async (data: ProfileFormData) => {
     try {
       setIsUploading(true);
-      let imageUrl = user?.profileImage;
+      let imageUrl = user?.profilePicture;
 
       if (data.profileImage?.[0]) {
         const uploadResult = await uploadImage(data.profileImage[0]);
@@ -174,13 +176,15 @@ const ProfilePage = () => {
       </Card>
 
       {/* User History */}
-      <div className="mt-8 space-y-6">
-        {user?.role === 'tenant' ? (
-          <RentHistory userId={user.id} />
-        ) : (
-          <PropertyRentalHistory userId={user.id} />
-        )}
-      </div>
+      {user && user.id && (
+        <div className="mt-8 space-y-6">
+          {user.role === 'TENANT' ? (
+            <RentHistory userId={user.id} />
+          ) : (
+            <PropertyRentalHistory userId={user.id} />
+          )}
+        </div>
+      )}
     </motion.div>
   );
 };

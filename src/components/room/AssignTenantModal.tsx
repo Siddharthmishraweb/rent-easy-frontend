@@ -41,7 +41,7 @@ export default function AssignTenantModal({
   };
 
   return (
-    <Modal title="Assign Tenant" onClose={onClose}>
+    <Modal isOpen={true} title="Assign Tenant" onClose={onClose}>
       <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-4">
         <div>
           <Input
@@ -83,8 +83,9 @@ export default function AssignTenantModal({
         <div>
           <DatePicker
             label="Agreement End Date"
-            {...register('agreementEndDate', { required: 'End date is required' })}
+            onChange={(date) => register('agreementEndDate').onChange({ target: { value: date } })}
             error={errors.agreementEndDate?.message}
+            minDate={new Date()}
           />
         </div>
 
@@ -92,7 +93,7 @@ export default function AssignTenantModal({
           <Button type="button" variant="secondary" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="submit" variant="primary" loading={loading}>
+          <Button type="submit" variant="primary" isLoading={loading}>
             Assign Tenant
           </Button>
         </div>

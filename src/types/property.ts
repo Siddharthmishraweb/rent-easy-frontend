@@ -1,16 +1,23 @@
 export interface Room {
+  _id: string;
   id: string;
+  roomNumber: string;
   name: string;
   description: string;
   images: string[];
   rent: number;
-  securityDeposit: number;
   type: string;
+  securityDeposit: number;
+  roomType: string;
+  roomSize: string;
+  floorNumber: number;
   area: number;
   furnishing: 'FURNISHED' | 'SEMI_FURNISHED' | 'UNFURNISHED';
   maxOccupancy: number;
   status: 'AVAILABLE' | 'OCCUPIED' | 'MAINTENANCE';
+  isAvailable: boolean;
   features: string[];
+  amenities: string[];
   propertyCode: string;
   createdAt: string;
   updatedAt: string;

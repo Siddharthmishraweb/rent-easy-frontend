@@ -3,12 +3,10 @@ import { motion } from 'framer-motion';
 import { useRentalAgreement } from '@/hooks/useRentalAgreement';
 import Button from '@/components/shared/Button';
 import { Card, CardBody } from '@/components/shared/Card';
-import Badge from '@/components/shared/Badge';
-import { Spinner } from '@/components/shared/spinner';
+import { Badge } from '@/components/shared/Badge';
+import { Spinner } from '@/components/shared/Spinner';
 import { useRouter } from 'next/router';
-import { AgreementDetails } from '@/components/agreement/AgreementDetails';
-import { AgreementTimeline } from '@/components/agreement/AgreementTimeline';
-import { AgreementActions } from '@/components/agreement/AgreementActions';
+import type { RentalAgreement } from '@/types/api';
 
 const AgreementDetailPage = () => {
   const router = useRouter();
@@ -49,7 +47,7 @@ const AgreementDetailPage = () => {
                 Rental Agreement
               </h1>
               <p className="text-gray-600 dark:text-gray-400">
-                Agreement ID: {agreement.agreementId}
+                Agreement ID: {agreement.id}
               </p>
             </div>
             <Badge color={getStatusColor(agreement.status)} size="lg">
@@ -66,15 +64,15 @@ const AgreementDetailPage = () => {
                   <div className="space-y-2">
                     <p>
                       <span className="text-gray-600 dark:text-gray-400">Name: </span>
-                      {agreement.property.name}
+                      {agreement.property.propertyName}
                     </p>
                     <p>
                       <span className="text-gray-600 dark:text-gray-400">Address: </span>
-                      {agreement.property.address}
+                      {agreement.property.location.address}
                     </p>
                     <p>
                       <span className="text-gray-600 dark:text-gray-400">Room/Unit: </span>
-                      {agreement.room.name}
+                      {agreement.property.rooms?.[0]?.name || 'N/A'}
                     </p>
                   </div>
                 </div>
@@ -83,7 +81,7 @@ const AgreementDetailPage = () => {
                   <div className="space-y-2">
                     <p>
                       <span className="text-gray-600 dark:text-gray-400">Owner: </span>
-                      {agreement.owner.name}
+                      {agreement.ownerId}
                     </p>
                     <p>
                       <span className="text-gray-600 dark:text-gray-400">Tenant: </span>
@@ -99,29 +97,32 @@ const AgreementDetailPage = () => {
           <Card className="mb-6">
             <CardBody>
               <h3 className="text-lg font-semibold mb-4">Agreement Details</h3>
-              <AgreementDetails agreement={agreement} />
-            </CardBody>
-          </Card>
-
-          {/* Timeline */}
-          <Card className="mb-6">
-            <CardBody>
-              <h3 className="text-lg font-semibold mb-4">Agreement Timeline</h3>
-              <AgreementTimeline events={agreement.timeline} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <p><span className="text-gray-600">Start Date:</span> {new Date(agreement.startDate).toLocaleDateString()}</p>
+                  <p><span className="text-gray-600">End Date:</span> {new Date(agreement.endDate).toLocaleDateString()}</p>
+                </div>
+                <div>
+                  <p><span className="text-gray-600">Monthly Rent:</span> ₹{agreement.rentAmount}</p>
+                  <p><span className="text-gray-600">Security Deposit:</span> ₹{agreement.securityDeposit}</p>
+                </div>
+              </div>
             </CardBody>
           </Card>
 
           {/* Actions */}
           <Card>
             <CardBody>
-              <h3 className="text-lg font-semibold mb-4">Actions</h3>
-              <AgreementActions
-                agreement={agreement}
-                onAction={(action) => {
-                  // Handle agreement actions
-                  console.log('Action:', action);
-                }}
-              />
+              <div className="flex gap-4">
+                <Button variant="primary" onClick={() => console.log('Download')}>
+                  Download Agreement
+                </Button>
+                {agreement.status === 'ACTIVE' && (
+                  <Button variant="danger" onClick={() => console.log('Terminate')}>
+                    Terminate Agreement
+                  </Button>
+                )}
+              </div>
             </CardBody>
           </Card>
 
@@ -132,11 +133,6 @@ const AgreementDetailPage = () => {
             >
               Back to Agreements
             </Button>
-            {agreement.document && (
-              <Button onClick={() => window.open(agreement.document, '_blank')}>
-                Download Agreement
-              </Button>
-            )}
           </div>
         </div>
       ) : (

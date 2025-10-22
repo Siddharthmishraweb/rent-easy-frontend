@@ -1,11 +1,21 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useDocuments } from '@/hooks/useDocuments';
-import { Button } from '@/components/shared/Button';
+import Button from '@/components/shared/Button';
 import { Card, CardBody } from '@/components/shared/Card';
 import { Spinner } from '@/components/shared/Spinner';
 import { useAuth } from '@/contexts/AuthContext';
 import { DocumentUploader } from '@/components/document/DocumentUploader';
+
+interface Document {
+  id: string;
+  name: string;
+  type: string;
+  url: string;
+  userId: string;
+  createdAt: string;
+  status: 'pending' | 'verified' | 'rejected';
+}
 
 const DocumentsPage = () => {
   const { data: documents, isLoading, error } = useDocuments();
@@ -32,7 +42,7 @@ const DocumentsPage = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {documents?.map((doc) => (
+          {documents?.map((doc: Document) => (
             <motion.div
               key={doc.id}
               initial={{ opacity: 0, y: 20 }}

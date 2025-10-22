@@ -21,7 +21,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
           <div className="relative h-64 overflow-hidden">
             <Image
               src={property.images[0]}
-              alt={property.title}
+              alt={property.propertyName}
               layout="fill"
               objectFit="cover"
               className="transition-all duration-700 group-hover:scale-110 group-hover:rotate-1 transform"
@@ -37,18 +37,18 @@ export default function PropertyCard({ property }: PropertyCardProps) {
               whileHover={{ scale: 1.05 }}
             >
               <span className="bg-gradient-to-r from-blue-600 to-blue-400 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
-                {property.type}
+                {property.propertyType}
               </span>
             </motion.div>
 
             {/* Status Badge */}
-            {property.status !== 'AVAILABLE' && (
+            {!property.available && (
               <motion.div 
                 className="absolute top-4 right-4"
                 whileHover={{ scale: 1.05 }}
               >
                 <span className="bg-gradient-to-r from-red-600 to-red-400 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
-                  {property.status}
+                  Not Available
                 </span>
               </motion.div>
             )}

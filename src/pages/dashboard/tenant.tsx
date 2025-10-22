@@ -10,7 +10,7 @@ export default function TenantDashboard() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('properties');
 
-  if (!user?._id) {
+  if (!user?.id) {
     return (
       <DashboardLayout>
         <div className="flex items-center justify-center h-full">
@@ -62,14 +62,14 @@ export default function TenantDashboard() {
         </div>
 
         <div className="bg-white dark:bg-dark-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-dark-700 transition-colors duration-200">
-          {activeTab === 'properties' && <RentedProperties tenantId={user._id} />}
+          {activeTab === 'properties' && <RentedProperties tenantId={user.id} />}
           {activeTab === 'payments' && (
             <div className="space-y-6">
-              <RentPayment tenantId={user._id} />
-              <PaymentHistory tenantId={user._id} />
+              <RentPayment tenantId={user.id} />
+              <PaymentHistory tenantId={user.id} />
             </div>
           )}
-          {activeTab === 'complaints' && <ComplaintForm tenantId={user._id} />}
+          {activeTab === 'complaints' && <ComplaintForm tenantId={user.id} />}
         </div>
       </div>
     </DashboardLayout>

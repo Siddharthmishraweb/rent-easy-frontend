@@ -1,4 +1,4 @@
-import { api } from './api';
+import  api  from './api';
 import { Room } from '@/types/property';
 import { API_CONFIG } from '@/config/api.config';
 import { mockProperties } from '@/mocks/properties';
@@ -13,7 +13,7 @@ interface RoomFilters {
 }
 
 // Helper function to filter rooms based on criteria
-const mapMockRoomToRoom = (mockRoom: any, propertyCode: string): Room => ({
+const mapMockRoomToRoom = (mockRoom: any, propertyCode: string): any => ({
   id: mockRoom._id,
   name: mockRoom.name,
   description: mockRoom.description,

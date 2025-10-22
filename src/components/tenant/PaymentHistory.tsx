@@ -89,10 +89,10 @@ export default function PaymentHistory({ tenantId }: PaymentHistoryProps) {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {payments.map((payment) => (
-              <tr key={payment._id}>
+              <tr key={payment.id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900">
-                    {payment.agreement.property.title}
+                    {payment.propertyName || 'N/A'}
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">

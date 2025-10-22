@@ -38,7 +38,7 @@ export default function RentPayment({ tenantId }: RentPaymentProps) {
             order_id: data.orderId,
             handler: async (response: any) => {
               try {
-                await paymentService.verifyPayment(selectedPayment!._id, {
+                await paymentService.verifyPayment(selectedPayment!.id, {
                   razorpay_payment_id: response.razorpay_payment_id,
                   razorpay_order_id: response.razorpay_order_id,
                   razorpay_signature: response.razorpay_signature,
@@ -72,7 +72,7 @@ export default function RentPayment({ tenantId }: RentPaymentProps) {
 
   const handlePayment = (payment: RentPaymentType) => {
     setSelectedPayment(payment);
-    initPaymentMutation.mutate(payment._id);
+    initPaymentMutation.mutate(payment.id);
   };
 
   if (isLoading) {
@@ -103,13 +103,13 @@ export default function RentPayment({ tenantId }: RentPaymentProps) {
       <h3 className="text-lg font-semibold">Pending Payments</h3>
       {payments.map((payment) => (
         <div
-          key={payment._id}
+          key={payment.id}
           className="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
         >
           <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
             <div>
               <h4 className="font-medium text-gray-900">
-                {payment.agreement.property.title}
+                {payment.propertyName}
               </h4>
               <div className="mt-1 flex items-center text-sm text-gray-500">
                 <FiCalendar className="mr-1.5 h-4 w-4 text-gray-400" />

@@ -23,7 +23,7 @@ const sizeClasses = {
   full: 'max-w-full mx-4',
 };
 
-export const Modal: React.FC<ModalProps> = ({
+const Modal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
   title,
@@ -223,3 +223,5 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
     </Modal>
   );
 };
+
+export default Modal;

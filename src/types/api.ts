@@ -1,3 +1,5 @@
+import type { Property } from './property';
+
 export interface User {
   id: string;
   name: string;
@@ -30,7 +32,15 @@ export interface PaginatedResponse<T> extends ApiResponse {
 
 export interface RentalAgreement {
   id: string;
-  propertyCode: string;
+  propertyId: string;
+  property: Property;
+  tenant: {
+    id: string;
+    name: string;
+    email: string;
+    phone?: string;
+    profilePicture?: string;
+  };
   tenantId: string;
   ownerId: string;
   startDate: string;
@@ -57,6 +67,9 @@ export interface RentPayment {
   transactionId?: string;
   createdAt: string;
   updatedAt: string;
+  propertyName?: string;
+  tenantName?: string;
+  tenantEmail?: string;
 }
 
 export interface Review {
