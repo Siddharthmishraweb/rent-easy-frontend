@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import { ratingService } from '@/services/rating.service';
 
 interface Rating {
