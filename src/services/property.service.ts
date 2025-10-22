@@ -9,6 +9,7 @@ import {
   PropertySearchParams
 } from '../types/api';
 import { mockProperties } from '../mocks/properties';
+import { mockPropertyDetailsResponse } from '../mocks/propertyDetails';
 
 const BASE_URL = API_CONFIG.API_BASE_URL;
 
@@ -16,40 +17,7 @@ export const propertyService = {
   // Get property by ID
   async getPropertyById(id: string): Promise<ApiResponse> {
     if (API_CONFIG.USE_MOCK_DATA) {
-      const property = mockProperties.find(p => p._id === id);
-      if (!property) {
-        return {
-          success: false,
-          message: 'Property not found',
-          data: null
-        };
-      }
-
-      // Transform the mock data to match what the UI expects
-      return {
-        success: true,
-        message: 'Property found',
-        data: {
-          _id: property._id,
-          title: property.name,
-          description: property.description,
-          images: property.images,
-          status: property.status.toUpperCase(),
-          address: property.address,
-          type: property.type,
-          rent: property.rent,
-          securityDeposit: property.securityDeposit,
-          amenities: property.amenities,
-          rooms: property.rooms || [],
-          owner: {
-            ...property.owner,
-            createdAt: new Date().toISOString(),
-            profilePicture: null
-          },
-          reviews: [],
-          configuration: property.configuration
-        }
-      };
+      return mockPropertyDetailsResponse;
     }
     const response = await api.get(`${BASE_URL}/api/v1/property/${id}`);
     return response.data;
