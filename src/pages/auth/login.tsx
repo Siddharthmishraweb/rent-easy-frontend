@@ -177,7 +177,7 @@ export default function LoginPage() {
       <div className="hidden lg:flex lg:w-1/2">
         <div className="relative w-full">
           <Image
-            src="/login-banner.jpg"
+            src="https://images.pexels.com/photos/8470839/pexels-photo-8470839.jpeg"
             alt="Login banner"
             fill
             className="object-cover"

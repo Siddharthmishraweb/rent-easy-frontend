@@ -216,7 +216,7 @@ export default function RegisterPage() {
       <div className="hidden lg:flex lg:w-1/2">
         <div className="relative w-full">
           <Image
-            src="/register-banner.jpg"
+            src="https://images.pexels.com/photos/31221014/pexels-photo-31221014.jpeg"
             alt="Register banner"
             fill
             className="object-cover"
